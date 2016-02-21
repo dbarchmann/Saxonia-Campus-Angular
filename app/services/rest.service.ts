@@ -5,14 +5,18 @@ import {Observable} from 'rxjs/Observable'
 @Injectable()
 export class RestService {
 
-    constructor (private http: Http) {}
+    constructor(private http: Http) { }
 
     private _restUrl = 'http://localhost:8180/rest'
 
-    public getRest() {
-        return this.http.get(this._restUrl, {
-                headers: RestService.getHeaders()
-            })
+    public getBase() {
+        return this.get(this._restUrl)
+    }
+
+    public get(url) {
+        return this.http.get(url, {
+            headers: RestService.getHeaders()
+        })
             .do(data => console.log(data)) // eyeball results in the console
             .catch(RestService.handleError)
     }
@@ -25,7 +29,7 @@ export class RestService {
         return headers
     }
 
-    private static handleError (error: Response) {
+    private static handleError(error: Response) {
         console.error(error)
         return Observable.throw(error.json().error || 'Server error')
     }

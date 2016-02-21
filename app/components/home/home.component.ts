@@ -14,11 +14,10 @@ export class HomeComponent implements OnInit {
     constructor(private _router: Router, private _restService: RestService) {}
 
     getBaseResource() {
-        this._restService.getRest()
+        this._restService.getBase()
             .subscribe(
                 result => this._router.navigate(['Overview']),
                 error => this._router.navigate(['Login'])
         )
     }
 }
-
