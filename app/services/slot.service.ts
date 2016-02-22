@@ -9,6 +9,18 @@ export class SlotService {
     constructor(private restService: RestService) { }
 
     getSlots() {
+        /*
+         * This is the correct solution, but right now it doesn't work
+         * because of incorrect type definitions in rxjs/Observable.d.ts
+         * for the flatMap operator. See https://git.io/v2mOn
+         */
+        // return this.restService.getBase()
+        //     .map(res => res.json()._links.slots.href)
+        //     .flatMap(slotUrl => this.restService.get(slotUrl))
+        //     .map(res => <Slot[]>res.json()._embedded.slots)
+        //     .catch(SlotService.handleError);
+
+        // workaround
         return Observable.create(observer => {
             // get link from base url
             this.restService.getBase()
